@@ -1,0 +1,54 @@
+Update requests (must implement):
+
+A) Upgrade Expo SDK:
+- Upgrade this Expo project from SDK 54 to SDK 55.
+- Fix all breaking changes and ensure it runs in Expo Go SDK 55.
+- Update dependencies accordingly and ensure `npx expo start` works.
+
+B) App name + branding:
+- Change the app name (Arabic) to: "بريفتي"
+- Update app.json / app.config.js, display name, and any internal titles.
+- Add a small fixed footer text on EVERY screen (bottom center):
+  "Mohamed el imam"
+  It must be visible on all pages without covering content.
+- Keep full Arabic UI + RTL.
+
+C) PDF real curriculum system (Brevet/BEM):
+Goal: Add a feature to import real PDF curriculum/exams, then automatically extract lessons + generate exercises + answers + explanations, and store them in SQLite.
+
+Implementation requirements:
+1) Add a new screen: /pdf-library
+   - List imported PDFs (name, date, size)
+   - Button: "إضافة PDF" (pick document from phone)
+   - Use expo-document-picker to import PDFs
+
+2) Add a backend service (recommended: Node.js + Express inside the Replit project):
+   - Endpoint POST /api/pdf/ingest
+     Input: PDF file
+     Output: structured JSON with:
+       subjects[], lessons[], exercises[]
+   - Use a PDF text extractor (pdf-parse or similar). If the PDF is scanned images, include OCR fallback (tesseract.js or a simple notice to the user that OCR is needed).
+
+3) AI extraction + generation:
+   - After extracting text, split it into sections/lessons with headings.
+   - Generate for each lesson:
+     - Summary
+     - Key points
+     - Common mistakes
+     - 10 MCQ exercises with:
+       question, 4 options, correct option index, explanation
+   - Return as JSON, and the mobile app inserts it into SQLite tables (subjects/lessons/exercises).
+
+4) Offline-first:
+   - After ingestion, all generated lessons and exercises must be available offline from SQLite.
+
+5) Safety + quality:
+   - Do not hallucinate content when text extraction fails. If extraction is incomplete, show an error in Arabic and ask the user to upload a clearer PDF.
+   - Keep questions aligned with the extracted content.
+
+D) UI updates:
+- Add a menu entry on Dashboard: "مكتبة PDF"
+- Add another screen /about showing:
+  "تم تطوير وتنفيذ هذا التطبيق بواسطة محمد الإمام - Mohamed El Imam"
+
+Deliver working code + README explaining how to run mobile + backend locally in Replit.
