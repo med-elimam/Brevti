@@ -1,7 +1,12 @@
 {
   "expo": {
+<<<<<<< HEAD
     "name": "بريفتي",
     "slug": "Breveti",
+=======
+    "name": " بريفتي",
+    "slug": "Brevti",
+>>>>>>> 97350f0 (save work)
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
